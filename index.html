@@ -109,13 +109,10 @@
 <script>
 let intentos = 0;
 
-
-
-// CAMBIA ESTA CONTRASEÑA POR LA QUE QUIERAS
+// CONTRASEÑA CORRECTA
 const CONTRASENA_CORRECTA = atob("WklLRWRlbFNVUl8yMV8wMV8yMDA0");
-                                    
 
-// AÑADE AQUÍ TUS MEMES
+// MEMES
 const memes = [
     "memes/WhatsApp Image 2026-01-16 at 17.03.34.jpeg",
     "memes/WhatsApp Image 2026-01-16 at 17.07.20 (1).jpeg",
@@ -124,13 +121,13 @@ const memes = [
     "memes/WhatsApp Image 2026-01-16 at 17.07.20 (4).jpeg",
     "memes/WhatsApp Image 2026-01-16 at 17.07.20 (5).jpeg",
     "memes/WhatsApp Image 2026-01-16 at 17.07.20 (6).jpeg",
-    "memes/WhatsApp Image 2026-01-16 at 17.07.20.jpeg",
+    "memes/WhatsApp Image 2026-01-16 at 17.07.20.jpeg"
 ];
 
-
+// MENSAJES
 const mensajesTroll = [
     "Clave incorrecta. Mi abuela en taca taca lo sabía antes que tú.",
-    "Esa no era.Vamos chicos todos a la vez ¡TONTOOOOO!.",
+    "Esa no era. Vamos chicos todos a la vez ¡TONTOOOOO!.",
     "Vaya puto pringao",
     "Sistema detecta: 0% de materia gris.",
     "Ande va quillo.",
@@ -152,7 +149,6 @@ function intentar() {
         return;
     }
 
-    // Fallo → mensaje troll + meme aleatorio
     mensaje.textContent = mensajesTroll[Math.floor(Math.random() * mensajesTroll.length)];
     meme.src = memes[Math.floor(Math.random() * memes.length)];
     meme.style.display = "block";
