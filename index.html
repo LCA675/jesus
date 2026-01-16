@@ -3,94 +3,86 @@
 <head>
 <meta charset="UTF-8">
 <title>Caja Fuerte</title>
+
 <style>
-    body {
-        background: #1a1a1a;
-        color: #eee;
-        font-family: "Courier New", monospace;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        text-align: center;
-    }
+body {
+    background: #1a1a1a;
+    color: #eee;
+    font-family: "Courier New", monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
 
-    .safe {
-        background: linear-gradient(145deg, #3a3a3a, #1f1f1f);
-        border: 8px solid #555;
-        border-radius: 20px;
-        width: 350px;
-        padding: 30px;
-        box-shadow: 0 0 20px #000;
-        position: relative;
-    }
+.safe {
+    background: linear-gradient(145deg, #3a3a3a, #1f1f1f);
+    border: 8px solid #555;
+    border-radius: 20px;
+    width: 350px;
+    padding: 30px;
+    box-shadow: 0 0 20px #000;
+}
 
-    .dial {
-        width: 120px;
-        height: 120px;
-        border: 6px solid #777;
-        border-radius: 50%;
-        margin: 0 auto 20px;
-        background: radial-gradient(circle, #555, #222);
-        position: relative;
-        animation: spin 6s linear infinite;
-    }
+.dial {
+    width: 120px;
+    height: 120px;
+    border: 6px solid #777;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    background: radial-gradient(circle, #555, #222);
+    animation: spin 6s linear infinite;
+}
 
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
 
-    .screen {
-        background: #000;
-        color: #0f0;
-        padding: 10px;
-        border: 2px solid #0f0;
-        border-radius: 5px;
-        margin-bottom: 15px;
-        font-size: 18px;
-        min-height: 30px;
-    }
+.screen {
+    background: #000;
+    color: #0f0;
+    padding: 10px;
+    border: 2px solid #0f0;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    min-height: 30px;
+}
 
-    input {
-        padding: 10px;
-        font-size: 18px;
-        width: 80%;
-        text-align: center;
-        border: 2px solid #444;
-        border-radius: 5px;
-        background: #222;
-        color: #0f0;
-        margin-bottom: 10px;
-    }
+input {
+    padding: 10px;
+    font-size: 18px;
+    width: 80%;
+    text-align: center;
+    border: 2px solid #444;
+    border-radius: 5px;
+    background: #222;
+    color: #0f0;
+    margin-bottom: 10px;
+}
 
-    button {
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border: none;
-        border-radius: 5px;
-        background: #444;
-        color: #fff;
-    }
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background: #444;
+    color: #fff;
+}
 
-    #fotoFinal {
-        display: none;
-        margin-top: 30px;
-        max-width: 80%;
-        border: 3px solid #fff;
-        border-radius: 10px;
-    }
-
-    #meme {
-        display: none;
-        margin-top: 20px;
-        max-width: 80%;
-        border-radius: 10px;
-    }
+#meme, #fotoFinal {
+    display: none;
+    margin-top: 20px;
+    max-width: 100%;
+    border-radius: 10px;
+}
 </style>
 </head>
+
 <body>
 
 <div class="safe">
@@ -109,10 +101,10 @@
 <script>
 let intentos = 0;
 
-// CONTRASEÑA CORRECTA
-const CONTRASENA_CORRECTA = atob("WklLRWRlbFNVUl8yMV8wMV8yMDA0");
+// 🔐 CONTRASEÑA EN BASE64
+const CONTRASENA_CORRECTA = atob("WklLRWRlbFNVUlJfMjFfMDFfMjAwNA==");
 
-// MEMES
+// 😂 MEMES (nombres originales)
 const memes = [
     "memes/WhatsApp Image 2026-01-16 at 17.03.34.jpeg",
     "memes/WhatsApp Image 2026-01-16 at 17.07.20 (1).jpeg",
@@ -124,45 +116,50 @@ const memes = [
     "memes/WhatsApp Image 2026-01-16 at 17.07.20.jpeg"
 ];
 
-// MENSAJES
+// 💬 MENSAJES
 const mensajesTroll = [
-    "Clave incorrecta. Mi abuela en taca taca lo sabía antes que tú.",
-    "Esa no era. Vamos chicos todos a la vez ¡TONTOOOOO!.",
-    "Vaya puto pringao",
-    "Sistema detecta: 0% de materia gris.",
-    "Ande va quillo.",
-    "Pista: Pista."
+    "Clave incorrecta. Mi abuela lo sabía antes que tú.",
+    "No es tan difícil, campeón.",
+    "Piénsalo un poquito más.",
+    "Sistema detecta: cerebro en modo ahorro.",
+    "Ande vas quillo.",
+    "Pista: no es esa."
 ];
 
 function intentar() {
-    const input = document.getElementById("pass").value;
+    const input = document.getElementById("pass").value.trim();
     const mensaje = document.getElementById("mensaje");
-    const foto = document.getElementById("fotoFinal");
     const meme = document.getElementById("meme");
+    const foto = document.getElementById("fotoFinal");
 
     intentos++;
 
+    // ✅ CONTRASEÑA CORRECTA
     if (input === CONTRASENA_CORRECTA) {
-        mensaje.textContent = "Acceso concedido";
+        mensaje.textContent = "✅ Acceso concedido";
         meme.style.display = "none";
         foto.style.display = "block";
         return;
     }
 
+    // ❌ CONTRASEÑA INCORRECTA
     mensaje.textContent = mensajesTroll[Math.floor(Math.random() * mensajesTroll.length)];
-    meme.src = memes[Math.floor(Math.random() * memes.length)];
-    meme.style.display = "block";
+
+    const imagenAleatoria = memes[Math.floor(Math.random() * memes.length)];
+    meme.style.display = "none";
+    meme.src = encodeURI(imagenAleatoria);
+    meme.onload = () => meme.style.display = "block";
 
     if (intentos === 6) {
-        mensaje.textContent = "Pero vamo a ve, tu eres tonto chaval?";
+        mensaje.textContent = "Pero vamos a ver… ¿tú lees?";
     }
 
-    if (intentos === 100) {
-        mensaje.textContent = "Vale, ya está PORFIN Entra tontito.";
-        foto.style.display = "block";
+    if (intentos === 10) {
+        mensaje.textContent = "Vale, ya me das pena.";
     }
 }
 </script>
 
 </body>
 </html>
+
