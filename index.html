@@ -15,6 +15,7 @@ body {
     justify-content: center;
     height: 100vh;
     text-align: center;
+    overflow: hidden;
 }
 
 .safe {
@@ -24,6 +25,7 @@ body {
     width: 350px;
     padding: 30px;
     box-shadow: 0 0 20px #000;
+    z-index: 2;
 }
 
 .dial {
@@ -74,16 +76,33 @@ button {
     color: #fff;
 }
 
-#meme, #fotoFinal {
+#meme {
     display: none;
-    margin-top: 20px;
+    margin-top: 15px;
     max-width: 100%;
     border-radius: 10px;
+}
+
+#fotoFinal {
+    display: none;
+    margin-top: 20px;
+    max-width: 80%;
+    border-radius: 10px;
+    z-index: 2;
+}
+
+#confetti {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
 }
 </style>
 </head>
 
 <body>
+
+<canvas id="confetti"></canvas>
 
 <div class="safe">
     <div class="dial"></div>
@@ -97,6 +116,8 @@ button {
 </div>
 
 <img id="fotoFinal" src="memes/WhatsApp Image 2026-01-16 at 17.16.33.jpeg">
+
+<audio id="victorySound" src="victory.mp3"></audio>
 
 <script>
 let intentos = 0;
@@ -126,6 +147,41 @@ const mensajesTroll = [
     "Pista: no es esa."
 ];
 
+// 🎉 CONFETTI
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+let confettis = [];
+
+function lanzarConfetti() {
+    confettis = [];
+    for (let i = 0; i < 200; i++) {
+        confettis.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            r: Math.random() * 6 + 4,
+            d: Math.random() * 10 + 5,
+            color: `hsl(${Math.random() * 360},100%,50%)`
+        });
+    }
+    requestAnimationFrame(animarConfetti);
+}
+
+function animarConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confettis.forEach(c => {
+        ctx.fillStyle = c.color;
+        ctx.fillRect(c.x, c.y, c.r, c.r);
+        c.y += c.d;
+    });
+    if (confettis.some(c => c.y < canvas.height)) {
+        requestAnimationFrame(animarConfetti);
+    }
+}
+
+// 🔘 BOTÓN
 function intentar() {
     const input = document.getElementById("pass").value.trim();
     const mensaje = document.getElementById("mensaje");
@@ -134,32 +190,28 @@ function intentar() {
 
     intentos++;
 
-    // ✅ CONTRASEÑA CORRECTA
+    // ✅ CORRECTA
     if (input === CONTRASENA_CORRECTA) {
-        mensaje.textContent = "✅ Acceso concedido";
+        mensaje.textContent = "🎉 ACCESO CONCEDIDO 🎉";
         meme.style.display = "none";
         foto.style.display = "block";
+
+        lanzarConfetti();
+
+        const sonido = document.getElementById("victorySound");
+        sonido.currentTime = 0;
+        sonido.play();
+
         return;
     }
 
-    // ❌ CONTRASEÑA INCORRECTA
+    // ❌ INCORRECTA
     mensaje.textContent = mensajesTroll[Math.floor(Math.random() * mensajesTroll.length)];
-
-    const imagenAleatoria = memes[Math.floor(Math.random() * memes.length)];
     meme.style.display = "none";
-    meme.src = encodeURI(imagenAleatoria);
+    meme.src = encodeURI(memes[Math.floor(Math.random() * memes.length)]);
     meme.onload = () => meme.style.display = "block";
-
-    if (intentos === 6) {
-        mensaje.textContent = "Pero vamos a ver… ¿tú lees?";
-    }
-
-    if (intentos === 10) {
-        mensaje.textContent = "Vale, ya me das pena.";
-    }
 }
 </script>
 
 </body>
 </html>
-
