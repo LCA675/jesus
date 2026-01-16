@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -109,10 +109,13 @@
 <script>
 let intentos = 0;
 
-// CONTRASEÑA CORRECTA (Base64 → texto)
-const CONTRASENA_CORRECTA = atob("WklLRWRlbFNVUl8yMV8wMV8yMDA0");
 
-// LISTA DE MEMES
+
+// CAMBIA ESTA CONTRASEÑA POR LA QUE QUIERAS
+const CONTRASENA_CORRECTA = atob("WklLRWRlbFNVUl8yMV8wMV8yMDA0");
+                                    
+
+// AÑADE AQUÍ TUS MEMES
 const memes = [
     "memes/WhatsApp Image 2026-01-16 at 17.03.34.jpeg",
     "memes/WhatsApp Image 2026-01-16 at 17.07.20 (1).jpeg",
@@ -121,13 +124,13 @@ const memes = [
     "memes/WhatsApp Image 2026-01-16 at 17.07.20 (4).jpeg",
     "memes/WhatsApp Image 2026-01-16 at 17.07.20 (5).jpeg",
     "memes/WhatsApp Image 2026-01-16 at 17.07.20 (6).jpeg",
-    "memes/WhatsApp Image 2026-01-16 at 17.07.20.jpeg"
+    "memes/WhatsApp Image 2026-01-16 at 17.07.20.jpeg",
 ];
 
-// MENSAJES DE ERROR
+
 const mensajesTroll = [
     "Clave incorrecta. Mi abuela en taca taca lo sabía antes que tú.",
-    "Esa no era. Vamos chicos todos a la vez ¡TONTOOOOO!.",
+    "Esa no era.Vamos chicos todos a la vez ¡TONTOOOOO!.",
     "Vaya puto pringao",
     "Sistema detecta: 0% de materia gris.",
     "Ande va quillo.",
@@ -142,7 +145,6 @@ function intentar() {
 
     intentos++;
 
-    // SI LA CONTRASEÑA ES CORRECTA
     if (input === CONTRASENA_CORRECTA) {
         mensaje.textContent = "Acceso concedido";
         meme.style.display = "none";
@@ -150,7 +152,7 @@ function intentar() {
         return;
     }
 
-    // SI ES INCORRECTA → MEME + MENSAJE
+    // Fallo → mensaje troll + meme aleatorio
     mensaje.textContent = mensajesTroll[Math.floor(Math.random() * mensajesTroll.length)];
     meme.src = memes[Math.floor(Math.random() * memes.length)];
     meme.style.display = "block";
@@ -160,7 +162,7 @@ function intentar() {
     }
 
     if (intentos === 100) {
-        mensaje.textContent = "Vale, ya está PORFIN. Entra tontito.";
+        mensaje.textContent = "Vale, ya está PORFIN Entra tontito.";
         foto.style.display = "block";
     }
 }
@@ -168,4 +170,3 @@ function intentar() {
 
 </body>
 </html>
-
